@@ -1,0 +1,191 @@
+:root {
+    --alvocor-navy: #0D1B2A;
+    --alvocor-blue: #2563EB;
+    --alvocor-cyan: #38BDF8;
+    --alvocor-slate: #64748B;
+    --alvocor-light: #F2F8F0;
+    --alvocor-white: #ffffff;
+    --alvocor-border: rgba(13, 27, 42, .12);
+    --alvocor-shadow: 0 18px 45px rgba(13, 27, 42, .12);
+}
+
+html { font-size: 14px; scroll-behavior: smooth; }
+@media (min-width: 768px) { html { font-size: 16px; } }
+
+body {
+    margin: 0;
+    font-family: 'Poppins', Arial, Helvetica, sans-serif;
+    color: var(--alvocor-navy);
+    background: var(--alvocor-light);
+    line-height: 1.7;
+    padding-top: 74px;
+}
+
+img { max-width: 100%; }
+a { color: var(--alvocor-blue); }
+
+.btn-primary {
+    --bs-btn-bg: var(--alvocor-blue);
+    --bs-btn-border-color: var(--alvocor-blue);
+    --bs-btn-hover-bg: #1d4ed8;
+    --bs-btn-hover-border-color: #1d4ed8;
+    box-shadow: 0 10px 22px rgba(37, 99, 235, .25);
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 .1rem white, 0 0 0 .25rem rgba(37, 99, 235, .35);
+}
+
+.site-header {
+    background: rgba(13, 27, 42, .96);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 2px 18px rgba(0,0,0,.18);
+}
+.site-header .navbar { min-height: 74px; }
+.brand-mark { height: 42px; width: auto; }
+.brand-text { font-weight: 800; letter-spacing: .08em; }
+.navbar-dark .navbar-nav .nav-link { color: rgba(255,255,255,.82); font-weight: 500; }
+.navbar-dark .navbar-nav .nav-link:hover,
+.navbar-dark .navbar-nav .nav-link:focus { color: #fff; }
+
+.hero-section {
+    color: #fff;
+    background:
+        radial-gradient(circle at 80% 10%, rgba(56,189,248,.25), transparent 28%),
+        radial-gradient(circle at 15% 20%, rgba(37,99,235,.32), transparent 24%),
+        linear-gradient(135deg, #07111f 0%, #0D1B2A 52%, #102b4a 100%);
+}
+.hero-section::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: .17;
+    background-image: linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
+    background-size: 44px 44px;
+    pointer-events: none;
+}
+.hero-section .container { position: relative; z-index: 1; }
+.py-lg-6 { padding-top: 6rem !important; padding-bottom: 6rem !important; }
+.eyebrow, .section-kicker {
+    color: var(--alvocor-blue);
+    font-size: .82rem;
+    font-weight: 800;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+}
+.hero-title { letter-spacing: -.04em; }
+.hero-lead { color: rgba(255,255,255,.76); max-width: 760px; }
+.hero-badge { border: 1px solid rgba(255,255,255,.2); color: #eaf4ff !important; background: rgba(255,255,255,.08) !important; padding: .65rem .9rem; }
+.hero-card {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16);
+    border-radius: 28px;
+    box-shadow: 0 26px 60px rgba(0,0,0,.22);
+    backdrop-filter: blur(10px);
+}
+.hero-logo { max-height: 230px; object-fit: contain; }
+
+.section-pad { padding: 5rem 0; }
+.section-heading { max-width: 850px; }
+.section-title { font-weight: 800; letter-spacing: -.03em; color: var(--alvocor-navy); }
+.section-text { color: #475569; font-size: 1.05rem; }
+
+.mission-panel,
+.service-card,
+.contact-card,
+.privacy-content {
+    background: #fff;
+    border: 1px solid var(--alvocor-border);
+    border-radius: 22px;
+    box-shadow: var(--alvocor-shadow);
+}
+.mission-panel { background: linear-gradient(135deg, #ffffff 0%, #eef6ff 100%); }
+.metric-card {
+    border: 1px solid rgba(37,99,235,.16);
+    border-radius: 16px;
+    padding: 1rem;
+    background: rgba(255,255,255,.7);
+}
+.metric-card strong { display: block; color: var(--alvocor-blue); font-size: 1.1rem; }
+.metric-card span { color: #64748b; font-size: .9rem; }
+
+.services-section { background: linear-gradient(180deg, #F2F8F0 0%, #eaf3fb 100%); }
+.service-card { padding: 1.6rem; transition: transform .2s ease, box-shadow .2s ease; }
+.service-card:hover { transform: translateY(-4px); box-shadow: 0 22px 55px rgba(13,27,42,.16); }
+.service-card h3 { font-size: 1.12rem; font-weight: 750; margin-bottom: .75rem; }
+.service-card p { color: #526174; margin-bottom: 0; }
+.service-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1rem;
+    border-radius: 14px;
+    color: var(--alvocor-blue);
+    background: rgba(37,99,235,.1);
+    border: 1px solid rgba(37,99,235,.18);
+    font-weight: 800;
+}
+
+.tech-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .75rem;
+    padding: 1.5rem;
+    background: #fff;
+    border: 1px solid var(--alvocor-border);
+    border-radius: 22px;
+    box-shadow: var(--alvocor-shadow);
+}
+.tech-cloud span {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid rgba(37,99,235,.18);
+    background: #f8fbff;
+    color: var(--alvocor-navy);
+    border-radius: 999px;
+    padding: .55rem .85rem;
+    font-weight: 600;
+    font-size: .92rem;
+}
+
+.cta-section {
+    background: linear-gradient(135deg, var(--alvocor-blue), #0D1B2A);
+    color: #fff;
+    padding: 4rem 0;
+}
+.cta-section p { color: rgba(255,255,255,.75); }
+.contact-section { background: #fff; }
+.contact-card p { margin-bottom: .75rem; }
+
+.page-hero {
+    background: linear-gradient(135deg, #07111f, #102b4a);
+    color: #fff;
+    padding: 5rem 0;
+}
+.small-hero { padding: 4rem 0; }
+.privacy-content { padding: 2rem; }
+.privacy-content h2 { font-size: 1.35rem; margin-top: 2rem; font-weight: 750; }
+
+.site-footer {
+    background: #08111e;
+    color: #eaf4ff;
+}
+.site-footer a { color: #fff; }
+
+#home, #about, #services, #technologies, #contact { scroll-margin-top: 88px; }
+
+@media (max-width: 991.98px) {
+    body { padding-top: 68px; }
+    .site-header .navbar { min-height: 68px; }
+    .hero-section { text-align: left; }
+    .section-pad { padding: 3.5rem 0; }
+}
+
+@media (max-width: 575.98px) {
+    .brand-text { font-size: .95rem; }
+    .brand-mark { height: 34px; }
+    .hero-title { font-size: 2.35rem; }
+    .hero-card { border-radius: 20px; }
+}
