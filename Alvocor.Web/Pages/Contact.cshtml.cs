@@ -4,7 +4,7 @@ using System.Net.Mail;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace ALVOCOR.Pages;
+namespace Alvocor.Web.Pages;
 
 public class ContactModel : PageModel
 {

@@ -8,7 +8,7 @@ if (builder.Environment.IsDevelopment())
     builder.Logging.AddConsole();
     builder.Logging.AddDebug();
 
-    var keyDirectory = Path.Combine(Path.GetTempPath(), "ALVOCOR", "DataProtectionKeys");
+    var keyDirectory = Path.Combine(Path.GetTempPath(), "Alvocor.Web", "DataProtectionKeys");
     Directory.CreateDirectory(keyDirectory);
 
     builder.Services.AddDataProtection()
