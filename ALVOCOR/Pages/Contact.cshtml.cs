@@ -28,11 +28,12 @@ public class ContactModel : PageModel
 
     public void OnGet()
     {
+        Input.SubmittedAt = DateTimeOffset.UtcNow.ToString("O");
     }
 
     public async Task<IActionResult> OnPostAsync()
     {
-        if (!string.IsNullOrWhiteSpace(Input.Website))
+        if (IsLikelyAutomatedSubmission())
         {
             StatusMessage = "Thank you. Your inquiry has been received.";
             return RedirectToPage();
@@ -114,6 +115,21 @@ public class ContactModel : PageModel
             <p>{Encode(Input.Message).Replace("\n", "<br>")}</p>
             """;
     }
+
+    private bool IsLikelyAutomatedSubmission()
+    {
+        if (!string.IsNullOrWhiteSpace(Input.Website))
+        {
+            return true;
+        }
+
+        if (!DateTimeOffset.TryParse(Input.SubmittedAt, out var submittedAt))
+        {
+            return true;
+        }
+
+        return DateTimeOffset.UtcNow - submittedAt < TimeSpan.FromSeconds(3);
+    }
 }
 
 public class ContactInput
@@ -141,4 +157,6 @@ public class ContactInput
     public string Message { get; set; } = string.Empty;
 
     public string? Website { get; set; }
+
+    public string SubmittedAt { get; set; } = string.Empty;
 }

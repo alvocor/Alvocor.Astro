@@ -4,6 +4,11 @@
     var canonicalPath = ViewData["CanonicalPath"]?.ToString() ?? Context.Request.Path.ToString();
     var canonicalUrl = $"https://alvocor.com{canonicalPath}";
     var fullTitle = title.Contains("ALVOCOR") ? title : $"{title} | ALVOCOR LLC";
+    var ogImage = ViewData["OgImage"]?.ToString() ?? "https://alvocor.com/images/assets/alvocor-og-image.png";
+    var preloadImage = ViewData["PreloadImage"]?.ToString();
+    var jsonTitle = System.Text.Json.JsonSerializer.Serialize(fullTitle);
+    var jsonDescription = System.Text.Json.JsonSerializer.Serialize(description);
+    var jsonCanonicalUrl = System.Text.Json.JsonSerializer.Serialize(canonicalUrl);
     var currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "/Index";
     string NavClass(string page) => currentPage.Equals(page, StringComparison.OrdinalIgnoreCase) ? "nav-link active" : "nav-link";
     string? CurrentPageAttr(string page) => currentPage.Equals(page, StringComparison.OrdinalIgnoreCase) ? "page" : null;
@@ -15,17 +20,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@fullTitle</title>
     <meta name="description" content="@description" />
+    <meta name="robots" content="index, follow" />
     <meta name="theme-color" content="#0D1B2A" />
+    <meta name="msapplication-TileColor" content="#0D1B2A" />
+    <meta name="application-name" content="ALVOCOR LLC" />
     <link rel="canonical" href="@canonicalUrl" />
 
     <meta property="og:title" content="@fullTitle" />
     <meta property="og:description" content="@description" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="@canonicalUrl" />
-    <meta property="og:image" content="https://alvocor.com/images/assets/alvocor-business-cover.png" />
+    <meta property="og:image" content="@ogImage" />
+    <meta property="og:image:secure_url" content="@ogImage" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ALVOCOR LLC brand graphic" />
     <meta property="og:site_name" content="ALVOCOR LLC" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="@fullTitle" />
+    <meta name="twitter:description" content="@description" />
+    <meta name="twitter:image" content="@ogImage" />
 
     <link rel="icon" href="~/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="~/images/assets/apple-touch-icon.png" />
+    <link rel="manifest" href="~/site.webmanifest" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    @if (!string.IsNullOrWhiteSpace(preloadImage))
+    {
+        <link rel="preload" as="image" href="@preloadImage" fetchpriority="high" />
+    }
     <script type="importmap"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -52,6 +78,25 @@
         "https://www.linkedin.com/company/alvocor/",
         "https://github.com/alvocor"
       ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "WebPage",
+      "name": @Html.Raw(jsonTitle),
+      "description": @Html.Raw(jsonDescription),
+      "url": @Html.Raw(jsonCanonicalUrl),
+      "isPartOf": {
+        "@@type": "WebSite",
+        "name": "ALVOCOR LLC",
+        "url": "https://alvocor.com"
+      },
+      "publisher": {
+        "@@type": "Organization",
+        "name": "ALVOCOR LLC",
+        "url": "https://alvocor.com"
+      }
     }
     </script>
 </head>
@@ -87,7 +132,7 @@
         <div class="container py-5">
             <div class="row g-4">
                 <div class="col-lg-5">
-                    <img src="~/images/assets/alvocor-logo-full.png" asp-append-version="true" alt="ALVOCOR LLC logo" class="footer-logo mb-3" />
+                    <img src="~/images/assets/alvocor-logo-full.png" asp-append-version="true" alt="ALVOCOR LLC logo" class="footer-logo mb-3" loading="lazy" decoding="async" />
                     <div class="fw-semibold">ALVOCOR LLC</div>
                     <div class="text-white-50">Innovate. Automate. Accelerate.</div>
                 </div>
@@ -117,9 +162,8 @@
         </div>
     </footer>
 
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script src="~/js/site.js" asp-append-version="true" defer></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

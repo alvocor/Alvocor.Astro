@@ -42,20 +42,21 @@
                         <label asp-for="Input.Website"></label>
                         <input asp-for="Input.Website" tabindex="-1" autocomplete="off" />
                     </div>
+                    <input asp-for="Input.SubmittedAt" type="hidden" />
                     <div class="row g-3">
                         <div class="col-md-6">
                             <label class="form-label" asp-for="Input.Name"></label>
-                            <input class="form-control" asp-for="Input.Name" autocomplete="name" />
+                            <input class="form-control" asp-for="Input.Name" autocomplete="name" placeholder="Your name" />
                             <span class="text-danger" asp-validation-for="Input.Name"></span>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label" asp-for="Input.Email"></label>
-                            <input class="form-control" asp-for="Input.Email" autocomplete="email" />
+                            <input class="form-control" asp-for="Input.Email" autocomplete="email" placeholder="you@example.com" />
                             <span class="text-danger" asp-validation-for="Input.Email"></span>
                         </div>
                         <div class="col-md-6">
                             <label class="form-label" asp-for="Input.Company"></label>
-                            <input class="form-control" asp-for="Input.Company" autocomplete="organization" />
+                            <input class="form-control" asp-for="Input.Company" autocomplete="organization" placeholder="Company or organization" />
                             <span class="text-danger" asp-validation-for="Input.Company"></span>
                         </div>
                         <div class="col-md-6">
@@ -72,7 +73,7 @@
                         </div>
                         <div class="col-12">
                             <label class="form-label" asp-for="Input.Message"></label>
-                            <textarea class="form-control" asp-for="Input.Message" rows="5"></textarea>
+                            <textarea class="form-control" asp-for="Input.Message" rows="5" placeholder="Briefly describe your project, goals, timeline, or current challenge."></textarea>
                             <span class="text-danger" asp-validation-for="Input.Message"></span>
                         </div>
                         <div class="col-12">
