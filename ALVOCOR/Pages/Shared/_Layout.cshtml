@@ -1,18 +1,31 @@
-﻿<!DOCTYPE html>
+@{
+    var title = ViewData["Title"]?.ToString() ?? "Enterprise Software Development & AI Consulting";
+    var description = ViewData["Description"]?.ToString() ?? "ALVOCOR LLC provides enterprise software development, AI solutions, cloud consulting, API integration, automation, and technology consulting services.";
+    var canonicalPath = ViewData["CanonicalPath"]?.ToString() ?? Context.Request.Path.ToString();
+    var canonicalUrl = $"https://alvocor.com{canonicalPath}";
+    var fullTitle = title.Contains("ALVOCOR") ? title : $"{title} | ALVOCOR LLC";
+    var currentPage = ViewContext.RouteData.Values["page"]?.ToString() ?? "/Index";
+    string NavClass(string page) => currentPage.Equals(page, StringComparison.OrdinalIgnoreCase) ? "nav-link active" : "nav-link";
+    string? CurrentPageAttr(string page) => currentPage.Equals(page, StringComparison.OrdinalIgnoreCase) ? "page" : null;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] | ALVOCOR LLC</title>
-    <meta name="description" content="@(ViewData["Description"] ?? "ALVOCOR LLC provides enterprise software development, AI solutions, cloud consulting, API integration, automation, and technology consulting services.")" />
+    <title>@fullTitle</title>
+    <meta name="description" content="@description" />
     <meta name="theme-color" content="#0D1B2A" />
+    <link rel="canonical" href="@canonicalUrl" />
 
-    <meta property="og:title" content="@ViewData["Title"] | ALVOCOR LLC" />
-    <meta property="og:description" content="@(ViewData["Description"] ?? "Enterprise software development, AI solutions, cloud consulting, automation, and digital transformation.")" />
+    <meta property="og:title" content="@fullTitle" />
+    <meta property="og:description" content="@description" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://alvocor.com" />
+    <meta property="og:url" content="@canonicalUrl" />
     <meta property="og:image" content="https://alvocor.com/images/assets/alvocor-business-cover.png" />
+    <meta property="og:site_name" content="ALVOCOR LLC" />
 
+    <link rel="icon" href="~/favicon.ico" />
     <script type="importmap"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -20,26 +33,46 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/ALVOCOR.styles.css" asp-append-version="true" />
+    <script type="application/ld+json">
+    {
+      "@@context": "https://schema.org",
+      "@@type": "Organization",
+      "name": "ALVOCOR LLC",
+      "url": "https://alvocor.com",
+      "logo": "https://alvocor.com/images/assets/alvocor-logo-full.png",
+      "email": "alex@alvocor.com",
+      "telephone": "+1-484-288-9153",
+      "address": {
+        "@@type": "PostalAddress",
+        "addressLocality": "Exton",
+        "addressRegion": "PA",
+        "addressCountry": "US"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/company/alvocor/",
+        "https://github.com/alvocor"
+      ]
+    }
+    </script>
 </head>
 <body>
     <header class="site-header fixed-top">
-        <nav class="navbar navbar-expand-lg navbar-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Primary navigation">
             <div class="container">
                 <a class="navbar-brand d-flex align-items-center gap-2" asp-area="" asp-page="/Index" aria-label="ALVOCOR LLC Home">
                     <img src="~/images/assets/alvocor-logo-mark.png" asp-append-version="true" alt="ALVOCOR logo mark" class="brand-mark" />
-                    <span class="brand-text">ALVOCOR LLC</span>
+                    <span class="brand-text">ALVOCOR</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div id="mainNavbar" class="collapse navbar-collapse">
                     <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-page="/Index" asp-fragment="home">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-page="/Index" asp-fragment="about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-page="/Index" asp-fragment="services">Services</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-page="/Index" asp-fragment="technologies">Technologies</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-page="/Privacy">Privacy</a></li>
-                        <li class="nav-item ms-lg-2"><a class="btn btn-primary btn-sm px-3" href="mailto:alex@alvocor.com">Contact</a></li>
+                        <li class="nav-item"><a class="@NavClass("/Index")" asp-area="" asp-page="/Index" aria-current="@CurrentPageAttr("/Index")">Home</a></li>
+                        <li class="nav-item"><a class="@NavClass("/Services")" asp-area="" asp-page="/Services" aria-current="@CurrentPageAttr("/Services")">Services</a></li>
+                        <li class="nav-item"><a class="@NavClass("/Portfolio")" asp-area="" asp-page="/Portfolio" aria-current="@CurrentPageAttr("/Portfolio")">Portfolio</a></li>
+                        <li class="nav-item"><a class="@NavClass("/About")" asp-area="" asp-page="/About" aria-current="@CurrentPageAttr("/About")">About</a></li>
+                        <li class="nav-item ms-lg-2"><a class="btn btn-primary btn-sm px-3 @(currentPage.Equals("/Contact", StringComparison.OrdinalIgnoreCase) ? "active" : null)" asp-area="" asp-page="/Contact" aria-current="@CurrentPageAttr("/Contact")">Contact</a></li>
                     </ul>
                 </div>
             </div>
@@ -51,15 +84,35 @@
     </main>
 
     <footer class="site-footer">
-        <div class="container py-4">
-            <div class="row align-items-center g-3">
-                <div class="col-md-8">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <img src="~/images/assets/alvocor-logo-full.png" asp-append-version="true" alt="ALVOCOR LLC logo" class="footer-logo mb-3" />
                     <div class="fw-semibold">ALVOCOR LLC</div>
-                    <div class="small text-white-50">Enterprise Software Development • AI Solutions • Cloud Consulting</div>
+                    <div class="text-white-50">Innovate. Automate. Accelerate.</div>
                 </div>
-                <div class="col-md-4 text-md-end small">
-                    © 2026 ALVOCOR LLC · <a asp-area="" asp-page="/Privacy">Privacy</a>
+                <div class="col-sm-6 col-lg-3">
+                    <h2 class="footer-heading">Navigation</h2>
+                    <ul class="footer-links">
+                        <li><a asp-page="/Index">Home</a></li>
+                        <li><a asp-page="/Services">Services</a></li>
+                        <li><a asp-page="/Portfolio">Portfolio</a></li>
+                        <li><a asp-page="/About">About</a></li>
+                        <li><a asp-page="/Contact">Contact</a></li>
+                        <li><a asp-page="/Privacy">Privacy</a></li>
+                    </ul>
                 </div>
+                <div class="col-sm-6 col-lg-4">
+                    <h2 class="footer-heading">Connect</h2>
+                    <ul class="footer-links">
+                        <li><a href="mailto:alex@alvocor.com">alex@alvocor.com</a></li>
+                        <li><a href="https://www.linkedin.com/company/alvocor/">LinkedIn</a></li>
+                        <li><a href="https://github.com/alvocor">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom mt-4 pt-4 small text-white-50">
+                &copy; 2026 ALVOCOR LLC. All rights reserved.
             </div>
         </div>
     </footer>

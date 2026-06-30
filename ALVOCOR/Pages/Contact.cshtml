@@ -1,0 +1,91 @@
+@page
+@model ContactModel
+@{
+    ViewData["Title"] = "Contact";
+    ViewData["Description"] = "Contact ALVOCOR LLC for enterprise software development, AI automation, cloud consulting, API integration, modernization, and technology consulting.";
+    ViewData["CanonicalPath"] = "/Contact";
+}
+
+<section class="page-hero">
+    <div class="container">
+        <div class="eyebrow mb-3">Contact</div>
+        <h1 class="display-5 fw-bold mb-3">Schedule a consultation with ALVOCOR LLC.</h1>
+        <p class="lead mb-0">Discuss enterprise software development, AI automation, cloud solutions, API integration, modernization, or technical planning needs.</p>
+    </div>
+</section>
+
+<section class="section-pad bg-white">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-5">
+                <h2 class="section-title">Business inquiries</h2>
+                <p class="section-text">Use the contact details below or send a project inquiry through the form.</p>
+                <div class="contact-card p-4">
+                    <p><strong>Email:</strong> <a href="mailto:alex@alvocor.com">alex@alvocor.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+14842889153">(484) 288-9153</a></p>
+                    <p><strong>Location:</strong> Exton, Pennsylvania</p>
+                    <p class="mb-0"><strong>Service areas:</strong> PA, NJ, DE, MD, NY, VA, DC</p>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <form class="contact-form" method="post" aria-label="Contact form">
+                    @if (!string.IsNullOrWhiteSpace(Model.StatusMessage))
+                    {
+                        <div class="alert alert-success" role="status">@Model.StatusMessage</div>
+                    }
+                    @if (!string.IsNullOrWhiteSpace(Model.ErrorMessage))
+                    {
+                        <div class="alert alert-danger" role="alert">@Model.ErrorMessage</div>
+                    }
+                    <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+                    <div class="visually-hidden" aria-hidden="true">
+                        <label asp-for="Input.Website"></label>
+                        <input asp-for="Input.Website" tabindex="-1" autocomplete="off" />
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" asp-for="Input.Name"></label>
+                            <input class="form-control" asp-for="Input.Name" autocomplete="name" />
+                            <span class="text-danger" asp-validation-for="Input.Name"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" asp-for="Input.Email"></label>
+                            <input class="form-control" asp-for="Input.Email" autocomplete="email" />
+                            <span class="text-danger" asp-validation-for="Input.Email"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" asp-for="Input.Company"></label>
+                            <input class="form-control" asp-for="Input.Company" autocomplete="organization" />
+                            <span class="text-danger" asp-validation-for="Input.Company"></span>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" asp-for="Input.ServiceInterest"></label>
+                            <select class="form-select" asp-for="Input.ServiceInterest">
+                                <option>Enterprise Software Development</option>
+                                <option>AI Automation</option>
+                                <option>Cloud Solutions</option>
+                                <option>API Development &amp; Integration</option>
+                                <option>Application Modernization</option>
+                                <option>Technology Consulting</option>
+                            </select>
+                            <span class="text-danger" asp-validation-for="Input.ServiceInterest"></span>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" asp-for="Input.Message"></label>
+                            <textarea class="form-control" asp-for="Input.Message" rows="5"></textarea>
+                            <span class="text-danger" asp-validation-for="Input.Message"></span>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-lg" type="submit">Submit Inquiry</button>
+                            <p class="form-note mt-3 mb-0">Submissions are sent securely to <a href="mailto:alex@alvocor.com">alex@alvocor.com</a>.</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
