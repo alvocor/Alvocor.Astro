@@ -52,7 +52,7 @@ public class ContactModel : PageModel
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unable to send contact form email.");
-            ErrorMessage = "The inquiry could not be sent right now. Please email alex@alvocor.com directly.";
+            ErrorMessage = "The inquiry could not be sent right now. Please email contact@alvocor.com directly.";
             return Page();
         }
     }
@@ -63,7 +63,7 @@ public class ContactModel : PageModel
         var host = GetRequiredSetting(section, "SmtpHost");
         var username = GetRequiredSetting(section, "Username");
         var password = GetRequiredSetting(section, "Password");
-        var toAddress = section["ToAddress"] ?? "alex@alvocor.com";
+        var toAddress = section["ToAddress"] ?? "contact@alvocor.com";
         var fromAddress = section["FromAddress"] ?? username;
         var port = section.GetValue("SmtpPort", 587);
         var enableSsl = section.GetValue("EnableSsl", true);
