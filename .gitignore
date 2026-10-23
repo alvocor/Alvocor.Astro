@@ -377,3 +377,7 @@ dist/
 .env
 .env.*
 !.env.example
+
+# Vendored browser assets are source files
+!public/lib/**/dist/
+!public/lib/**/dist/**
