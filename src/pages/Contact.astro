@@ -1,0 +1,71 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+<Layout title="Contact" description="Contact ALVOCOR LLC for enterprise software development, AI automation, cloud consulting, API integration, modernization, and technology consulting." canonicalPath="/Contact">
+<section class="page-hero">
+    <div class="container">
+        <div class="eyebrow mb-3">Contact</div>
+        <h1 class="display-5 fw-bold mb-3">Schedule a consultation with ALVOCOR LLC.</h1>
+        <p class="lead mb-0">Discuss enterprise software development, AI automation, cloud solutions, API integration, modernization, or technical planning needs.</p>
+    </div>
+</section>
+
+<section class="section-pad bg-white">
+    <div class="container">
+        <div class="row g-5">
+            <div class="col-lg-5">
+                <h2 class="section-title">Business inquiries</h2>
+                <p class="section-text">Use the contact details below or send a project inquiry through the form.</p>
+                <div class="contact-card p-4">
+                    <p><strong>Email:</strong> <a href="mailto:contact@alvocor.com">contact@alvocor.com</a></p>
+                    <p><strong>Phone:</strong> <a href="tel:+14842889153">(484) 288-9153</a></p>
+                    <p><strong>Location:</strong> Exton, Pennsylvania</p>
+                    <p class="mb-0"><strong>Service areas:</strong> PA, NJ, DE, MD, NY, VA, DC</p>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <form class="contact-form" method="post" action="/api/contact" aria-label="Contact form">
+                    <div id="contact-status" role="status" aria-live="polite" hidden></div>
+                    <div class="visually-hidden" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off" /></div>
+                    <input name="submittedAt" type="hidden" />
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label" for="name">Name</label>
+                            <input class="form-control" id="name" name="name" required maxlength="100" autocomplete="name" placeholder="Your name" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-control" id="email" name="email" required maxlength="254" type="email" autocomplete="email" placeholder="you@example.com" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="company">Company</label>
+                            <input class="form-control" id="company" name="company" maxlength="150" autocomplete="organization" placeholder="Company or organization" />
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="serviceInterest">Service interest</label>
+                            <select class="form-select" id="serviceInterest" name="serviceInterest" required>
+                                <option>Enterprise Software Development</option>
+                                <option>AI Automation</option>
+                                <option>Cloud Solutions</option>
+                                <option>API Development &amp; Integration</option>
+                                <option>Application Modernization</option>
+                                <option>Technology Consulting</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label" for="message">Project details</label>
+                            <textarea class="form-control" id="message" name="message" required maxlength="3000" minlength="20" rows="5" placeholder="Briefly describe your project, goals, timeline, or current challenge."></textarea>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary btn-lg" type="submit">Submit Inquiry</button>
+                            <p class="form-note mt-3 mb-0">Submissions are sent securely to <a href="mailto:contact@alvocor.com">contact@alvocor.com</a>.</p>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<script src="../scripts/contact.ts"></script>
+
+</Layout>

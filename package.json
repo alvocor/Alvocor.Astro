@@ -1,0 +1,17 @@
+{
+  "name": "alvocor-astro",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=22.23.4" },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "node --test tests/*.test.mjs",
+    "pages:dev": "npm run build && wrangler pages dev dist",
+    "deploy": "npm run build && wrangler pages deploy dist"
+  },
+  "dependencies": { "astro": "7.4.2" },
+  "devDependencies": { "wrangler": "4.152.0" }
+}

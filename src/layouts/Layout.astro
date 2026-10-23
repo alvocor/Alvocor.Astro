@@ -1,0 +1,133 @@
+---
+interface Props { title: string; description: string; canonicalPath: string; preloadImage?: string; }
+const { title, description, canonicalPath, preloadImage } = Astro.props;
+const fullTitle = title.includes('ALVOCOR') ? title : `${title} | ALVOCOR LLC`;
+const canonicalUrl = new URL(canonicalPath, Astro.site).href;
+const ogImage = new URL('/images/assets/alvocor-og-image.png', Astro.site).href;
+const currentPage = canonicalPath === '/' ? '/Index' : canonicalPath;
+const navClass = (page: string) => currentPage === page ? 'nav-link active' : 'nav-link';
+const organization = {
+  '@context': 'https://schema.org', '@type': 'Organization', name: 'ALVOCOR LLC',
+  url: 'https://alvocor.com', logo: 'https://alvocor.com/images/assets/alvocor-logo-full.png',
+  email: 'contact@alvocor.com', telephone: '+1-484-288-9153',
+  address: { '@type': 'PostalAddress', addressLocality: 'Exton', addressRegion: 'PA', addressCountry: 'US' },
+  sameAs: ['https://www.linkedin.com/company/alvocor/', 'https://github.com/alvocor']
+};
+const webpage = { '@context': 'https://schema.org', '@type': 'WebPage', name: fullTitle,
+  description, url: canonicalUrl, isPartOf: { '@type': 'WebSite', name: 'ALVOCOR LLC', url: 'https://alvocor.com' },
+  publisher: organization };
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#0D1B2A" />
+    <meta name="msapplication-TileColor" content="#0D1B2A" />
+    <meta name="application-name" content="ALVOCOR LLC" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:secure_url" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="ALVOCOR LLC brand graphic" />
+    <meta property="og:site_name" content="ALVOCOR LLC" />
+    <meta property="og:locale" content="en_US" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/assets/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <meta name="msapplication-config" content="/browserconfig.xml" />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high" />}
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/site.css" />
+    <link rel="stylesheet" href="/css/layout.css" />
+
+
+    <script type="application/ld+json" set:html={JSON.stringify(organization)} />
+    <script type="application/ld+json" set:html={JSON.stringify(webpage)} />
+</head>
+<body>
+    <header class="site-header fixed-top">
+        <nav class="navbar navbar-expand-lg navbar-dark" aria-label="Primary navigation">
+            <div class="container">
+                <a class="navbar-brand d-flex align-items-center gap-2" href="/" aria-label="ALVOCOR LLC Home">
+                    <img src="/images/assets/alvocor-logo-mark.png" alt="ALVOCOR logo mark" class="brand-mark" />
+                    <span class="brand-text">ALVOCOR</span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="mainNavbar" class="collapse navbar-collapse">
+                    <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+                        <li class="nav-item"><a class={navClass("/Index")}  href="/" aria-current={currentPage === "/Index" ? "page" : undefined}>Home</a></li>
+                        <li class="nav-item"><a class={navClass("/Services")}  href="/Services" aria-current={currentPage === "/Services" ? "page" : undefined}>Services</a></li>
+                        <li class="nav-item"><a class={navClass("/Portfolio")}  href="/Portfolio" aria-current={currentPage === "/Portfolio" ? "page" : undefined}>Portfolio</a></li>
+                        <li class="nav-item"><a class={navClass("/About")}  href="/About" aria-current={currentPage === "/About" ? "page" : undefined}>About</a></li>
+                        <li class="nav-item ms-lg-2"><a class:list={["btn btn-primary btn-sm px-3", { active: currentPage === "/Contact" }]} href="/Contact" aria-current={currentPage === "/Contact" ? "page" : undefined}>Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        <slot />
+    </main>
+
+    <footer class="site-footer">
+        <div class="container py-5">
+            <div class="row g-4">
+                <div class="col-lg-5">
+                    <img src="/images/assets/alvocor-logo-full.png" alt="ALVOCOR LLC logo" class="footer-logo mb-3" loading="lazy" decoding="async" />
+                    <div class="fw-semibold">ALVOCOR LLC</div>
+                    <div class="text-white-50">Innovate. Automate. Accelerate.</div>
+                </div>
+                <div class="col-sm-6 col-lg-3">
+                    <h2 class="footer-heading">Navigation</h2>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/Services">Services</a></li>
+                        <li><a href="/Portfolio">Portfolio</a></li>
+                        <li><a href="/About">About</a></li>
+                        <li><a href="/Contact">Contact</a></li>
+                        <li><a href="/Privacy">Privacy</a></li>
+                    </ul>
+                </div>
+                <div class="col-sm-6 col-lg-4">
+                    <h2 class="footer-heading">Connect</h2>
+                    <ul class="footer-links">
+                        <li><a href="mailto:contact@alvocor.com">contact@alvocor.com</a></li>
+                        <li><a href="https://www.linkedin.com/company/alvocor/">LinkedIn</a></li>
+                        <li><a href="https://github.com/alvocor">GitHub</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom mt-4 pt-4 small text-white-50">
+                &copy; 2026 ALVOCOR LLC. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script is:inline src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js" defer></script>
+    <script is:inline src="/js/site.js" defer></script>
+    
+</body>
+</html>
