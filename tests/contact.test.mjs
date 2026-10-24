@@ -15,7 +15,10 @@ test('rejects invalid input and cross-origin submissions', async () => {
   assert.equal((await submit({}, {}, 'https://other.example')).status, 403);
 });
 test('does not claim delivery without configuration; honeypot does not send', async () => {
-  assert.equal((await submit()).status, 503);
+  const response = await submit();
+  assert.equal(response.status, 503);
+  assert.equal((await response.json()).code, 'EMAIL_NOT_CONFIGURED');
+  assert.equal((await submit({}, { RESEND_API_KEY: ' ', CONTACT_FROM: ' ' })).status, 503);
   assert.equal((await submit({ website: 'spam.example' })).status, 200);
 });
 test('sends validated input and handles provider failures', async () => {
@@ -32,7 +35,15 @@ test('sends validated input and handles provider failures', async () => {
     };
     assert.equal((await submit({}, env)).status, 200);
     globalThis.fetch = async () => new Response('{}', { status: 429 });
-    assert.equal((await submit({}, env)).status, 502);
+    const limited = await submit({}, env);
+    assert.equal(limited.status, 502);
+    assert.equal((await limited.json()).code, 'EMAIL_RATE_LIMITED');
+    for (const [status, code] of [[401, 'EMAIL_AUTH_FAILED'], [403, 'EMAIL_SENDER_REJECTED'], [500, 'EMAIL_PROVIDER_ERROR']]) {
+      globalThis.fetch = async () => new Response('{}', { status });
+      const response = await submit({}, env);
+      assert.equal(response.status, 502);
+      assert.equal((await response.json()).code, code);
+    }
     globalThis.fetch = async () => { throw new Error('Network unavailable'); };
     assert.equal((await submit({}, env)).status, 502);
   } finally { globalThis.fetch = originalFetch; }
